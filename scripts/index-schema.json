@@ -1,0 +1,13 @@
+{
+  "name": "kb-uploads",
+  "fields": [
+    { "name": "id", "type": "Edm.String", "key": true, "filterable": true, "retrievable": true, "searchable": false },
+    { "name": "document_id", "type": "Edm.String", "filterable": true, "facetable": true, "retrievable": true, "searchable": false },
+    { "name": "document_name", "type": "Edm.String", "filterable": true, "sortable": true, "retrievable": true, "searchable": false },
+    { "name": "page", "type": "Edm.Int32", "filterable": true, "sortable": true, "retrievable": true, "searchable": false },
+    { "name": "chunk_index", "type": "Edm.Int32", "filterable": true, "sortable": true, "retrievable": true, "searchable": false },
+    { "name": "content", "type": "Edm.String", "searchable": true, "retrievable": true, "analyzer": "pt-br.microsoft" },
+    { "name": "uploaded_at", "type": "Edm.DateTimeOffset", "filterable": true, "sortable": true, "retrievable": true }
+  ],
+  "corsOptions": { "allowedOrigins": ["*"], "maxAgeInSeconds": 60 }
+}

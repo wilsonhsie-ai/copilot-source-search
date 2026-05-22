@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copilot Knowledge Source — Demo Azure AI Search</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">📚</span>
+      <div>
+        <h1>Knowledge Source Demo</h1>
+        <p class="tagline">Upload → OCR → Indexação → Perguntas (mesmo padrão usado pelo Copilot Studio)</p>
+      </div>
+    </div>
+    <div class="powered">
+      <span class="azure-badge">Document Intelligence</span>
+      <span class="azure-badge">AI Search</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Pipeline visual -->
+    <section class="pipeline">
+      <div class="step" id="step-1">
+        <div class="step-num">1</div>
+        <div class="step-label">Upload</div>
+        <div class="step-desc">PDF, imagem ou escaneado (até 20 MB)</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step" id="step-2">
+        <div class="step-num">2</div>
+        <div class="step-label">OCR + Layout</div>
+        <div class="step-desc">Document Intelligence extrai texto</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step" id="step-3">
+        <div class="step-num">3</div>
+        <div class="step-label">Chunking + Index</div>
+        <div class="step-desc">Quebra em parágrafos e indexa no AI Search</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step" id="step-4">
+        <div class="step-num">4</div>
+        <div class="step-label">Perguntas</div>
+        <div class="step-desc">BM25 retorna trechos relevantes com citação</div>
+      </div>
+    </section>
+
+    <!-- Upload panel -->
+    <section class="card" id="upload-card">
+      <h2>1. Envie um documento</h2>
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="file-input" accept=".pdf,.png,.jpg,.jpeg,.tiff,.bmp,.heif" hidden>
+        <div class="dropzone-content">
+          <div class="dropzone-icon">📄</div>
+          <p><strong>Arraste seu documento aqui</strong> ou <button id="browse-btn" class="link-btn">selecione um arquivo</button></p>
+          <p class="muted">PDF, PNG, JPG, TIFF — até 20 MB · F0 do Document Intelligence: 500 págs/mês</p>
+        </div>
+      </div>
+      <div id="ingest-status" class="status"></div>
+      <div id="document-info" class="document-info hidden"></div>
+    </section>
+
+    <!-- Ask panel (escondido até ter doc) -->
+    <section class="card hidden" id="ask-card">
+      <h2>2. Faça perguntas sobre o documento</h2>
+      <div class="ask-box">
+        <input id="question-input" type="text" placeholder="Ex: Quais são as obrigações de confidencialidade? Qual o prazo de pagamento?" autocomplete="off">
+        <button id="ask-btn">Perguntar</button>
+      </div>
+      <div class="quick-questions">
+        <span>Sugestões:</span>
+        <button class="chip" data-q="qual é o objeto deste documento">objeto / escopo</button>
+        <button class="chip" data-q="quem são as partes envolvidas">partes</button>
+        <button class="chip" data-q="quais são as datas e prazos">datas e prazos</button>
+        <button class="chip" data-q="quais são os valores envolvidos">valores</button>
+        <button class="chip" data-q="quais são as obrigações principais">obrigações</button>
+      </div>
+      <div id="ask-status" class="status"></div>
+      <div id="answers" class="answers"></div>
+      <div class="copilot-note hidden" id="copilot-note">
+        <strong>💡 Sobre o Copilot Studio:</strong> No produto real, esses trechos retornados pelo AI Search são exatamente o que o LLM (GPT-4) recebe como contexto para gerar uma resposta natural com citações. Esta demo mostra a etapa de <em>retrieval</em>; o <em>generation</em> exige Azure OpenAI (fora do free tier).
+      </div>
+    </section>
+
+    <!-- Reset -->
+    <section class="card hidden" id="manage-card">
+      <h2>3. Gerenciar</h2>
+      <p class="muted">Remover este documento do índice (útil para reiniciar a demo ou liberar espaço).</p>
+      <button id="reset-doc-btn" class="btn-danger">🗑️ Remover documento atual</button>
+      <button id="reset-all-btn" class="btn-danger-outline">🧹 Limpar índice completo</button>
+      <div id="reset-status" class="status"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Demo Azure AI Search + Document Intelligence · Free tier · Wilson Hsie · DSAS Microsoft Brasil</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

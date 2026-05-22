@@ -1,0 +1,10 @@
+{
+  "name": "copilot-source-api",
+  "version": "1.0.0",
+  "description": "Upload + OCR + indexing + Q&A for Copilot Studio knowledge source demo",
+  "main": "ingest/index.js",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "busboy": "^1.6.0"
+  }
+}
